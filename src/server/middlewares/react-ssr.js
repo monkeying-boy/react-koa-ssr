@@ -2,10 +2,23 @@
 //引入Index 组件
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import Home from '../../web/pages/Home';
+import App from '../../web/App';
 import { webPort } from '../../../config';
+import { StaticRouter } from 'react-router-dom';
+import { matchRoutes } from 'react-router-config';
+import routers from '../../routers/index'
+
 
 const distPath = `http://localhost:${webPort}`
+
+
+const getCurrentRoute = (url)=>{
+  const targetRoute = matchRoutes(routers,url)
+  // console.log(targetRoute,'targetRoute')
+  return targetRoute.map( ({route,match}) =>
+    route?.component?.loadData? route.component.loadData(): ''
+  )
+}
 
 
 export default async (ctx, next) => {
@@ -22,11 +35,8 @@ export default async (ctx, next) => {
     return
   }
 
-  // if (path.indexOf('.') > -1) {
-  //   ctx.body = null;
-  //   return next();
-  // }
-  
+  const currentRoute = getCurrentRoute(path)[0]
+  console.log(currentRoute,'currentRoute')
   
 
   let html = '',//组件渲染结果
@@ -37,7 +47,16 @@ export default async (ctx, next) => {
       description: '默认描述'
     };
 
-    html =  renderToString( <Home />)
+    // html =  renderToString( <Home />)
+    const context ={...currentRoute}
+    html = renderToString(
+      <StaticRouter location={ctx.path} context={context}>
+        <App location={ctx.path} context={context} />
+      </StaticRouter>
+    );
+  
+
+    console.log(context,'context')
 
   // if (proConfig.__IS_SSR__) {
   //   //获得静态路由

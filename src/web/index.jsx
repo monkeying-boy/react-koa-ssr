@@ -8,18 +8,9 @@
 //       </BrowserRouter>
 //   )
 // }
-import React from "react"
-import Home from "./pages/Home";
-
-const App = ()=>{
-  return(
-    <>
-     <Home />
-    </>
-  )
-}
+// import React from "react"
+import App from './App'
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 ReactDOM.hydrate(<App />, document.getElementById('root'))
-
-export default App
 
