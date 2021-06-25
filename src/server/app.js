@@ -4,13 +4,13 @@ import koaStatic from'koa-static'
 import { resolve } from 'path';
 import { nodePort } from '../../config.js';
 import reactSsr from './middlewares/react-ssr'
-console.log(nodePort,'nodePort')
+console.log(nodePort,'nodePort123')
 
 
 const app = new Koa();
 app.use(koaStatic(resolve('dist/client')))
 
-app.use( async (ctx, next) => {
+app.use(async (ctx, next) => {
   reactSsr(ctx,next)
 })
 

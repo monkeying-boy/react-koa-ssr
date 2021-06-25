@@ -3,13 +3,16 @@ import Webpack from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
 import webpackConfig from '../webpack/webpack.dev.js'
 import { webPort } from '../config';
+import {WEB_READY} from'./constant'
 
 //创建 webpack-dev-server 服务
 const createWebpackDevServer = () => {
 
   const compiler = Webpack(webpackConfig);
   compiler.hooks.done.tap('done', function () {
-    console.log(`\n web 编译完成`); //编译完成的时候 
+    console.log(`\n web 编译完成1`); //编译完成的时候 
+    // 通知主进程告知 web 编译完
+    console.log(WEB_READY)
   });
   const server = new WebpackDevServer(compiler);
   return server
@@ -29,4 +32,5 @@ const runWebpackDevServer = () => {
 
 }
 
+console.log('调用 runWebpackDevServer')
 runWebpackDevServer()

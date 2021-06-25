@@ -1,16 +1,21 @@
 const nodeExternals = require('webpack-node-externals')
 const {resolve} = require('path');
+const webpack =require('webpack')
 
 module.exports = {
   mode: 'development',
   entry:{
-    app: resolve('src/server/app')
+    main: resolve('src/server/app.js')
   },
   target: 'node',
   output: {
-    path: resolve('/dist/server'),
+    path: resolve('dist/server'),
+    publicPath: '/',
   },
-  externals: [nodeExternals()],
+  externals: nodeExternals({
+    // whitelist: [/\.(css|less|sass|scss)$/, /^antd.*?css/],
+    modulesDir: resolve('node_modules')
+  }),
   module: {
     rules: [
       {
@@ -35,4 +40,9 @@ module.exports = {
     //   '@dist': path.resolve(__dirname,'../dist')
     // }
   },
+  plugins:[
+    new webpack.DefinePlugin({
+      '__isBrowser__': false
+    })
+  ]
 };

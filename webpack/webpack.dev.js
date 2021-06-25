@@ -1,5 +1,6 @@
 const {resolve} = require('path');
 const {webPort} = require('../config')
+const webpack =require('webpack')
 
 const publicPath = `http://localhost:${webPort}`
 
@@ -44,5 +45,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-  }
+  },
+  plugins:[
+    new webpack.DefinePlugin({
+      '__isBrowser__': true
+    })
+  ]
 };
