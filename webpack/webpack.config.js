@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry:  path.resolve('src/web/index.jsx'),
+  entry:  path.resolve('src/index.jsx'),
   output: {
     libraryTarget: 'umd',
     path: path.resolve('dist/client'),

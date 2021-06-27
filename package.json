@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --exec babel-node ./src/server/app.js",
+    "dev": "nodemon --exec babel-node ./server/app.js",
     "start": "babel-node scripts/start",
     "watch-client": "babel-node scripts/hmr",
     "watch-server": "webpack --watch --config ./webpack/webpack.server.js",
@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "koa": "^2.13.1",
+    "koa-router": "^10.0.0",
     "koa-static": "^5.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-router-config": "^5.1.1",
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {

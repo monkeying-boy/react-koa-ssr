@@ -4,7 +4,7 @@ import { BrowserRouter, StaticRouter, Route } from 'react-router-dom'
 // import defaultLayout from '@/layout'
 // import { getWrappedComponent, getComponent } from 'utils'
 // import { routes as Routes } from '../config/config.ssr'
-import Routes from '../routers'
+import Routes from './routers'
 import { matchPath } from 'react-router-dom'
 
 // let __isBrowser__ = false

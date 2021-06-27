@@ -1,53 +1,24 @@
-//完成 react ssr 工作的中间件
-//引入Index 组件
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import App from '../../web/App';
-import { webPort } from '../../../config';
+import { serverProt } from '@config';
 import { StaticRouter , matchPath} from 'react-router-dom';
-import { matchRoutes } from 'react-router-config';
-import routers from '../../routers/index'
-import render from '../../web/render'
+import routers from '@/routers/index'
 
 
 const NotFound = (<div>没有找到404</div>);
 
 const getComponent = (path)=>{
-  // const targetRoute = matchRoutes(Routes,url)
-  // console.log(targetRoute,'targetRoute')
-  // return targetRoute.map( ({route,match}) =>
-  //   route?.component?.loadData? route.component.loadData(): 
-  // )
   const targetRoute = routers.find(route => matchPath(path, route)) || { Component: () => NotFound } // 找不到对应的组件时返回NotFound组件
   const activeComponent = targetRoute.component
   return activeComponent
 } 
 
-const distPath = `http://localhost:${webPort}`
-
-
-const getCurrentRoute = (url)=>{
-  const targetRoute = matchRoutes(routers,url)
-  // console.log(targetRoute,'targetRoute')
-  return targetRoute.map( ({route,match}) =>
-    route?.component?.loadData? route.component.loadData(): ''
-  )
-}
+const distPath = `http://localhost:${serverProt}`
 
 
 export default async (ctx, next) => {
   const path = ctx.request.path;
   console.log('ctx.request.path',path);
-  // 其他静态资源
-  if (path.indexOf('.') > -1) {
-    ctx.body = null;
-    return next();
-  }
-
-
-  if(path !== '/'){
-    return
-  }
 
   // let html = '',//组件渲染结果
     // fetchResult = {},//属于预取结果

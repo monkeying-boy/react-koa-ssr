@@ -1,7 +1,6 @@
 import React from'react'
-import { renderRoutes } from 'react-router-config';
 import { Switch,Route } from 'react-router-dom';
-import routeList from '../routers';
+import routeList from './routers';
 
 const App = ({location,context})=>{
   return(
@@ -11,7 +10,16 @@ const App = ({location,context})=>{
           path="/"
           render={props => <Home name="Alligator.io" {...props} />}
         /> */}
-          {renderRoutes(routeList)}
+
+        {
+          routeList.map( item => (
+            <Route
+              key={item.path}
+              {...item}
+            />
+          ))
+        }
+          {/* {renderRoutes(routeList)} */}
       </Switch>
   )
 }
