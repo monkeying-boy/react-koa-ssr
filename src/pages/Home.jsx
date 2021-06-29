@@ -20,6 +20,11 @@ Home.getInitialProps= ()=>{
   console.log('home.getInitialProps')
   return {
     data:[1,2,3,4,5],
+    tdk:{
+      title: '首页 title',
+      keywords: '首页 keywords',
+      description: '首页 description'
+    },
     msg:'成功',
     code: 200
   }

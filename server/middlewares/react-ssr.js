@@ -30,10 +30,13 @@ export default async (ctx, next) => {
 
     const ActiveComponent = getComponent(path)
     //提前获取页面所需数据
-    const serverData = ActiveComponent.getInitialProps ? await ActiveComponent.getInitialProps(ctx) : {}
+    const preData = ActiveComponent.getInitialProps ? await ActiveComponent.getInitialProps(ctx) : {}
+    if(preData.tdk){
+      tdk = preData.tdk
+    }
     const body = (
-      <StaticRouter location={ctx.req.url} context={serverData}>
-        <ActiveComponent getInitialProps={serverData} />
+      <StaticRouter location={ctx.req.url} context={preData}>
+        <ActiveComponent getInitialProps={preData} />
     </StaticRouter>
     )
     let html = renderToString(body)
@@ -51,6 +54,7 @@ export default async (ctx, next) => {
     <div id="root">${html}</div>
 </body>
 </html>
+  <script>window.IS_SSR=true</script>
  <script src=${distPath}/main.js></script>
 `;
 

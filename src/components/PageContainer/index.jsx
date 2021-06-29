@@ -52,19 +52,26 @@ export default (SourceComponent)=>{
                 document.title = tdk.title;
             }
         }
+        // 挂载到DOM前调用
+        // async componentWillMount(){
+        //     console.log('componentWillMount')
+        // }
         
+        // 挂载到DOM后调用
         async componentDidMount() {
             //注册事件，用于在页面回退和前进的时候触发
-            _isMount=true;//组件挂载完成
-            if (window.__IS__SSR__){//只有当启用 ssr 时
-                _this = this; // 修正_this指向，保证_this指向当前渲染的页面组件
+            // _isMount=true;//组件挂载完成
+            // if (window.__IS__SSR__){//只有当启用 ssr 时
+                // _this = this; // 修正_this指向，保证_this指向当前渲染的页面组件
                 //注册事件
-                window.addEventListener('popstate', popStateCallback);
+                // window.addEventListener('popstate', popStateCallback);
                 
-                if(_isPop){//如果前进或者后退 则需要异步获取数据
-                    this.getInitialProps();
-                }
-            }
+                // if(_isPop){//如果前进或者后退 则需要异步获取数据
+                //     this.getInitialProps();
+                // }
+            // }
+
+            console.log('componentDidMount')
 
             const canClientFetch = this.props.history && this.props.history.action === 'PUSH';//路由跳转的时候可以异步请求数据
             console.log('canClientFetch', canClientFetch);
@@ -72,11 +79,13 @@ export default (SourceComponent)=>{
                 await this.getInitialProps();
             }
         }
-
+        
+        // 组件卸载
         componentWillUnmount(){
+            console.log('componentWillUnmount');
             console.log('unmount');
-            _isPop=false; //重置为未触发
-            _isMount=false;//重置为未挂载
+            // _isPop=false; //重置为未触发
+            // _isMount=false;//重置为未挂载
         }
 
         render() {
@@ -94,8 +103,8 @@ export default (SourceComponent)=>{
                 if (this.state.canClientFetch) {//需要异步请求数据
                     props.getInitialProps = this.state.getInitialProps||{};
                 } else {
-                    props.getInitialProps = window.__INITIAL_DATA__;
-                    window.__INITIAL_DATA__ = null;//使用过后清除数据,否则其他页面会使用
+                    // props.getInitialProps = window.__INITIAL_DATA__;
+                    // window.__INITIAL_DATA__ = null;//使用过后清除数据,否则其他页面会使用
 
                 }             
             }else{
@@ -105,6 +114,9 @@ export default (SourceComponent)=>{
                 // props.getInitialProps = this.props.staticContext.getInitialProps||{}; 
                 props.getInitialProps = this.props.getInitialProps||{}; 
             }
+
+            console.log(props,'props')
+            console.log(this.props,'this.props')
          
             return <SourceComponent  {...props}></SourceComponent>
         }
