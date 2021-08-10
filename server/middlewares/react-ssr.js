@@ -35,8 +35,8 @@ export default async (ctx, next) => {
       tdk = preData.tdk
     }
     const body = (
-      <StaticRouter location={ctx.req.url} context={preData}>
-        <ActiveComponent getInitialProps={preData} />
+      <StaticRouter location={ctx.req.url}>
+        <ActiveComponent ssrContent={preData} />
     </StaticRouter>
     )
     let html = renderToString(body)
@@ -55,6 +55,7 @@ export default async (ctx, next) => {
 </body>
 </html>
   <script>window.IS_SSR=true</script>
+  <script>window.preData=${JSON.stringify(preData)}</script>
  <script src=${distPath}/main.js></script>
 `;
 

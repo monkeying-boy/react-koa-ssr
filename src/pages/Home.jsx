@@ -1,17 +1,26 @@
 import React, { useState } from "react"
-import PageContainer from'../components/PageContainer'
+import PageMiddle from '../components/PageMiddle'
 import About from "@/pages/About"
+import { useHistory } from "react-router-dom";
 
 const Home = (props) =>{
   console.log('home-12',props,'\n')
   const [count,setCount] = useState(0)
+  let history = useHistory();
+
+  function handleClick() {
+    history.push("/about");
+  }
+
+  
   return (
     <div>
       Home 页面-12-33--{count}
       <button onClick={()=>setCount(count+1)}>++</button>
       {/* <hr/> */}
-      <dir>{JSON.stringify(props.getInitialProps)}</dir>
-      <About/> 
+      <dir>{JSON.stringify(props.ssrContent)}</dir>
+      
+      <button onClick={handleClick}>about</button>
     </div>
   )
 }
@@ -30,4 +39,5 @@ Home.getInitialProps= ()=>{
   }
 }
 
-export default PageContainer(Home)
+// export default PageContainer(Home)
+export default PageMiddle(Home)

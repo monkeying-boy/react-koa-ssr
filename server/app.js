@@ -19,12 +19,18 @@ app.use(koaStatic(resolve('dist/client')))
 
 
 app.use(async (ctx, next) => {
-  console.log(ctx.request.url,'ctx.request.url')
-  if (/api\//.test(ctx.request.url)) {
+  let reqUrl = ctx.request.url
+  // api 接口和静态资源执行下一个中间件
+  if (reqUrl.includes('.')) {
     await next()
-  }else{
-    await reactSsr(ctx, next)
+    return
   }
+  if (/api\//.test(reqUrl)) {
+    console.log('api 接口')
+    return
+  }
+  await reactSsr(ctx, next)
+  
 })
 
 

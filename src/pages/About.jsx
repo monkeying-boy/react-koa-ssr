@@ -1,13 +1,21 @@
 import React from "react"
 import { useParams } from "react-router-dom"
-import PageContainer from'../components/PageContainer'
+import PageMiddle from '../components/PageMiddle'
+import { useHistory } from "react-router-dom";
+
 
 const About = (props) =>{
   let { id } = useParams();
+  let history = useHistory();
+
+  function handleClick() {
+    history.push("/");
+  }
   return (
     <div>
       <p>about 页面</p>
       <p>{id}</p>
+      <button onClick={handleClick}>home</button>
     </div>
   )
 }
@@ -21,4 +29,5 @@ About.getInitialProps= ()=>{
   }
 }
 
-export default PageContainer(About)
+// export default PageContainer(About)
+export default PageMiddle(About)
