@@ -1,7 +1,7 @@
 
 import Webpack from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
-import webpackConfig from '../webpack/webpack.dev.js'
+import webpackConfig from '../webpack/webpack.web.js'
 import { serverProt, devPort } from '../config';
 import {resolve} from'path';
 

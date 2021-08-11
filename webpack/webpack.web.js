@@ -1,5 +1,9 @@
 const {resolve} = require('path');
 const webpack =require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');// 将css提出去，而不是直接在页面来内嵌
+
 
 module.exports = {
   mode: 'development',
@@ -9,7 +13,7 @@ module.exports = {
   target: 'web',
   output: {
     filename: '[name].js',
-    path: resolve('dist/client'),
+    path: resolve('dist/spa'),
     publicPath:'/'
   },
   module: {
@@ -21,7 +25,24 @@ module.exports = {
             presets: ['@babel/preset-react']
           }
         }
-      }
+      },
+      {
+        test: /\.css$/,
+        use: [ 
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader'
+        ]
+      },
+      {
+        test: /\.less$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'less-loader'
+        ]
+      },
     ]
   },
   resolve: {
@@ -35,6 +56,8 @@ module.exports = {
   plugins:[
     new webpack.DefinePlugin({
       '__isBrowser__': true
-    })
+    }),
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({template:'public/index.html'})
   ]
 };
