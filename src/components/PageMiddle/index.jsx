@@ -3,7 +3,6 @@ import React from 'react';
 
 
 export default (Component)=>{
-  
   return class Hoc extends React.Component{
     constructor(props) {
       super(props);
@@ -21,27 +20,36 @@ export default (Component)=>{
     // 浏览器中发送请求
     async getData(){
       const {match,location} = this.props;
+      console.log(this.props,'props')
+      console.log(Component,'Component')
       const res =  Component.getInitialProps ? await Component.getInitialProps({match,location}) : {};
-      this.setState({
-          ssrContent: res,
-          canClientFetch: true
-      });
+      console.log(res,'res')
 
-      let { tdk } = res;
-      if (tdk) {
-        document.title = tdk.title;
+      if(__isBrowser__ && window.IS_SSR){
+        console.log('getData---------')
+        document.getElementById('SSR_CONTENT').innerText = JSON.stringify(res)
       }
+
+      // let { tdk } = res;
+      // if (tdk) {
+      //   document.title = tdk.title;
+      // }
     }
 
+    // componentWillMount(data){
+
+    // }
+
     // 浏览器环境挂载 dom 后
-    componentDidMount() {
-      if(window.IS_SSR){
+    async componentDidMount() {
+      if(__isBrowser__ ){
+        await this.getData()
         // 保证 ssr 数据同步
-        let data = window.preData
-        this.setState({ssrContent: data})
-        return
+        if(window.IS_SSR){
+          let data = document.getElementById('SSR_CONTENT').innerText
+          this.setState({ssrContent: JSON.parse(data)})
+        }
       }
-      this.getData()
     }
   
   

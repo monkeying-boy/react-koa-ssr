@@ -9,7 +9,7 @@ const Home = (props) =>{
   let history = useHistory();
 
   function handleClick() {
-    history.push("/about");
+    history.push("/about?id=1");
   }
 
   
@@ -39,5 +39,5 @@ Home.getInitialProps= ()=>{
   }
 }
 
-// export default PageContainer(Home)
-export default PageMiddle(Home)
+export default Home
+// export default PageMiddle(Home)

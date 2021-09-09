@@ -15,7 +15,7 @@ const app = new Koa();
 
 app.use(router.routes());   /*启动路由*/
 app.use(router.allowedMethods());
-app.use(koaStatic(resolve('dist/client')))
+app.use(koaStatic(resolve('dist')))
 
 
 app.use(async (ctx, next) => {

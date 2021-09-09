@@ -4,12 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --exec babel-node ./server/app.js",
     "start": "babel-node scripts/start",
-    "watch-client": "babel-node scripts/hmr",
-    "watch-server": "webpack --watch --config ./webpack/webpack.server.js",
-    "build-web": "webpack --config webpack/webpack.web.js",
-    "build-server": "webpack --config webpack/webpack.server.js"
+    "build:client": "webpack --config ./webpack/webpack.client.js --mode production",
+    "build:server": "webpack --config ./webpack/webpack.server.js --mode production"
   },
   "dependencies": {
     "koa": "^2.13.1",
